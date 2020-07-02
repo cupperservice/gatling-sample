@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  attacker:
+    build: 
+      context: ./services/attacker
+      dockerfile: Dockerfile
+    volumes:
+      - ./stress-test:/stress-test
+    command: tail -f > /dev/null
+  target:
+    build: 
+      context: ./services/target
+      dockerfile: Dockerfile
+    volumes:
+      - ./services/target/data/db.json:/db.json
+    ports:
+      - 3000:3000
+    command: json-server --host target --watch /db.json
