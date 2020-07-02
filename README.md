@@ -30,11 +30,11 @@ gatling:test
 
 * run a specific test
 ```
-gatling:testOnly coreapi.scenario.Scenario1_1
+gatling:testOnly cupper.scenario.FirstTest
 ```
 or
 ```
-gatling:testOnly *Scenario1_1
+gatling:testOnly *FirstTest
 ```
 
 # See more details about gatling
