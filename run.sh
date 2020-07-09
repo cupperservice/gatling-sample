@@ -9,35 +9,35 @@
 ##################################################################################################################
 
 #Specify user name
-if [ -z "$USER_NAME" ]; then
-  echo "Need to set USER_NAME"
+if [ -z '$USER_NAME' ]; then
+  echo 'Need to set USER_NAME'
   exit 1
 fi
  
 #Specify remote hosts list
-if [ "${#HOSTS}" eq "0" ]; then
-  echo "Need to set HOSTS"
+if [ '${#HOSTS}' eq '0' ]; then
+  echo 'Need to set HOSTS'
   exit 1
 fi
 
 #Specify to your simulation class name
-if [ -z "$SIMULATION_NAME" ]; then
-  echo "Need to set SIMULATION_NAME"
+if [ -z '$SIMULATION_NAME' ]; then
+  echo 'Need to set SIMULATION_NAME'
   exit 1
 fi
 
-if [ -z "$TARGET" ]; then
-  echo "Need to set TARGET"
+if [ -z '$TARGET' ]; then
+  echo 'Need to set TARGET'
   exit 1
 fi
 
-if [ -z "$SECRET_KEY" ]; then
-  echo "Need to set SECRET_KEY"
+if [ -z '$SECRET_KEY' ]; then
+  echo 'Need to set SECRET_KEY'
   exit 1
 fi
 
-if [ -z "$GATLING_HOME" ]; then
-  echo "Need to set GATLING_HOME"
+if [ -z '$GATLING_HOME' ]; then
+  echo 'Need to set GATLING_HOME'
   exit 1
 fi
 
@@ -49,48 +49,48 @@ GATLING_RUNNER=$GATLING_HOME/bin/gatling.sh
 GATLING_REPORT_DIR=$GATLING_HOME/results/
 GATHER_REPORTS_DIR=/tmp/gatling/reports/
  
-echo "Starting Gatling cluster run for simulation: $SIMULATION_NAME"
+echo 'Starting Gatling cluster run for simulation: $SIMULATION_NAME'
  
-echo "Cleaning previous runs from localhost"
+echo 'Cleaning previous runs from localhost'
 rm -rf $GATHER_REPORTS_DIR
 mkdir $GATHER_REPORTS_DIR
 rm -rf $GATLING_REPORT_DIR
  
-for HOST in "${HOSTS[@]}"
+for HOST in '${HOSTS[@]}'
 do
-  echo "Cleaning previous runs from host: $HOST"
-  ssh -i $SECRET_KEY -n -f $USER_NAME@$HOST "sh -c 'rm -rf $GATLING_REPORT_DIR'"
+  echo 'Cleaning previous runs from host: $HOST'
+  ssh -i $SECRET_KEY -n -f $USER_NAME@$HOST 'sh -c 'rm -rf $GATLING_REPORT_DIR''
 done
  
-for HOST in "${HOSTS[@]}"
+for HOST in '${HOSTS[@]}'
 do
-  echo "Copying simulations to host: $HOST"
+  echo 'Copying simulations to host: $HOST'
   scp -i $SECRET_KEY -r ../stress-test/src/test/scala/* $USER_NAME@$HOST:$GATLING_SIMULATIONS_DIR
 done
  
-for HOST in "${HOSTS[@]}"
+for HOST in '${HOSTS[@]}'
 do
-  echo "Running simulation on host: $HOST"
-  ssh -n -f $USER_NAME@$HOST "sh -c 'nohup $GATLING_RUNNER -nr -s $SIMULATION_NAME > /gatling/run.log 2>&1 &'"
+  echo 'Running simulation on host: $HOST'
+  ssh -n -f $USER_NAME@$HOST 'sh -c 'nohup $GATLING_RUNNER -nr -s $SIMULATION_NAME > /gatling/run.log 2>&1 &''
 done
  
-# echo "Running simulation on localhost"
+# echo 'Running simulation on localhost'
 # $GATLING_RUNNER -nr -s $SIMULATION_NAME
  
-# echo "Gathering result file from localhost"
+# echo 'Gathering result file from localhost'
 # ls -t $GATLING_REPORT_DIR | head -n 1 | xargs -I {} mv ${GATLING_REPORT_DIR}{} ${GATLING_REPORT_DIR}report
 # cp ${GATLING_REPORT_DIR}report/simulation.log $GATHER_REPORTS_DIR
  
  
-for HOST in "${HOSTS[@]}"
+for HOST in '${HOSTS[@]}'
 do
-  echo "Gathering result file from host: $HOST"
-  ssh -n -f $USER_NAME@$HOST "sh -c 'ls -t $GATLING_REPORT_DIR | head -n 1 | xargs -I {} mv ${GATLING_REPORT_DIR}{} ${GATLING_REPORT_DIR}report'"
+  echo 'Gathering result file from host: $HOST'
+  ssh -n -f $USER_NAME@$HOST 'sh -c 'ls -t $GATLING_REPORT_DIR | head -n 1 | xargs -I {} mv ${GATLING_REPORT_DIR}{} ${GATLING_REPORT_DIR}report''
   scp -i $SECRET_KEY $USER_NAME@$HOST:${GATLING_REPORT_DIR}report/simulation.log ${GATHER_REPORTS_DIR}simulation-$HOST.log
 done
  
 mv $GATHER_REPORTS_DIR ./result
-# echo "Aggregating simulations"
+# echo 'Aggregating simulations'
 # $GATLING_RUNNER -ro reports
  
 #using macOSX

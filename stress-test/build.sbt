@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
       organization := "yumemi",
-      scalaVersion := "2.12.10",
+      scalaVersion := "2.12.11",
       version := "0.1.0"
     )),
     name := "stress-test",

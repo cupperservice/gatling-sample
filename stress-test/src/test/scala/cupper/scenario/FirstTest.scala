@@ -6,10 +6,8 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
 class FirstTest extends Simulation {
-  val target = sys.env.getOrElse("TARGET", "http://localhost:3000")
-
   val protocol = http
-    .baseUrl(target)
+    .baseUrl("http://localhost:3000")
     .headers(Map(
       HttpHeaderNames.ContentType -> HttpHeaderValues.ApplicationJson,
       HttpHeaderNames.UserAgent -> "gatling"

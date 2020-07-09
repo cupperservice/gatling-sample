@@ -11,8 +11,9 @@ services:
     build: 
       context: ./services/target
       dockerfile: Dockerfile
+    working_dir: /app
     volumes:
-      - ./services/target/data/db.json:/db.json
+      - ./services/target/app/app.js:/app/app.js
     ports:
       - 3000:3000
-    command: json-server --host target --watch /db.json
+    command: node app.js

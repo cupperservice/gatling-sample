@@ -10,15 +10,15 @@ It contains basic simulation from gatling quick start bundle.
 
 All tests:
 ```
-sbt "gatling:test"
+sbt 'gatling:test'
 ```
 
 Single test:
 ```
-sbt "gatling:testOnly computerdatabase.BasicSimulation"
+sbt 'gatling:testOnly computerdatabase.BasicSimulation'
 ```
 
 Report:
 ```
-sbt "gatling:lastReport"
+sbt 'gatling:lastReport'
 ```
