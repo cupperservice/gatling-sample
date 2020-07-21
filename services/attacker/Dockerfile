@@ -7,7 +7,7 @@ yum install -y which && \
 curl -s "https://get.sdkman.io" | bash && \
 source "$HOME/.sdkman/bin/sdkman-init.sh" && \
 sdk install sbt && \
-sdk install java 11.0.7.j9-adpt && \
+sdk install java 11.0.8.j9-adpt && \
 yum install -y git && \
 curl -sfL https://direnv.net/install.sh | bash && \
 echo eval '"$(direnv hook bash)"' >> ~/.bashrc
