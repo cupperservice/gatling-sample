@@ -1,4 +1,17 @@
 version: '3.7'
+
+x-loucast: &locust
+    image: locust
+    build:
+      context: ./services/attacker-locust
+      dockerfile: Dockerfile
+    environment: &locust-env
+      TARGET_HOST: "${TARGET_HOST:-http://localhost}"
+      TEST_FILE: "${TEST_FILE:-tasks.py}"
+    volumes:
+    - ./services/attacker-locust/locust-tasks:/locust-tasks
+    - ./:/work
+
 services:
   attacker:
     build: 
@@ -17,3 +30,21 @@ services:
     ports:
       - 3000:3000
     command: node app.js
+  master:
+    <<: *locust
+    environment:
+      <<: *locust-env
+      LOCUST_MODE: master
+    ports:
+      - 8089:8089
+    working_dir: /work
+    command: /locust-tasks/run.sh
+  slave:
+    <<: *locust
+    environment:
+      <<: *locust-env
+      LOCUST_MODE: worker
+      MASTER_HOST: master
+    links:
+      - master
+    command: /locust-tasks/run.sh
