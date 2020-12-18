@@ -24,7 +24,7 @@ if [[ "$LOCUST_MODE" = "master" ]]; then
 elif [[ "$LOCUST_MODE" = "master-without-ui" ]]; then
     LOCUS_OPTS="$LOCUS_OPTS --master --no-web -c $NUM_CLIENTS -r $HATCH_RATE -t $RUN_TIME --csv perf-test"
 elif [[ "$LOCUST_MODE" = "worker" ]]; then
-    LOCUS_OPTS="$LOCUS_OPTS --slave --master-host=$MASTER_HOST"
+    LOCUS_OPTS="$LOCUS_OPTS --worker --master-host=$MASTER_HOST"
 fi
 
 echo "$LOCUST $LOCUS_OPTS"

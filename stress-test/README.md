@@ -1,24 +1,26 @@
-## stress-test - performance test suite
+## Start docker containers
+docker-compose up -d
 
-Project uses [sbt plugin][sbtplugindoc] of [gatling][gatlingdoc].
-It contains basic simulation from gatling quick start bundle.
+## Run Gatling
+1. login attacker
+docker-compose exec attacker bash
 
-[sbtplugindoc]: https://gatling.io/docs/current/extensions/sbt_plugin/
-[gatlingdoc]: https://gatling.io/docs/current/advanced_tutorial/
+2. run sbt
+cd stress-test
+sbt
 
-### Run
-
-All tests:
+* All tests:
 ```
-sbt 'gatling:test'
+gatling:test
 ```
 
 Single test:
 ```
-sbt 'gatling:testOnly computerdatabase.BasicSimulation'
+gatling:testOnly cupper.scenario.Demo
 ```
 
-Report:
-```
-sbt 'gatling:lastReport'
-```
+3. Place of the reports
+stress-test/target/gatling
+
+## Run locust
+http://localhost:8089

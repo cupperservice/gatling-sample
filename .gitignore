@@ -4,3 +4,4 @@ target/
 .DS_Store
 !/services/target
 node_modules/
+locust-tasks/

@@ -1,1 +1,1 @@
-locustio==0.13.5
+locust==1.4.1

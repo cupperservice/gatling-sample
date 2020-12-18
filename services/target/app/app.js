@@ -4,6 +4,8 @@ require('date-utils')
 
 const app = express()
 
+app.disable('etag')
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -13,18 +15,18 @@ app.use(async (req, res, next) => {
   res.header("Pragma", "no-cache");
   res.header("Expires", 0);
 
-next()
+  next()
 })
 
 app.post('/users/login', async (req, res) => {
   console.log(req.body.login_id)
   console.log(req.body.password)
   let now = new Date()
-  res.json({'token':`${now.toFormat('YYYYMMDDHH24MISS')}`})  
+  res.status(200).json({'token':`${now.toFormat('YYYYMMDDHH24MISS')}`})  
 })
 
 app.post('/users/logout', async (req, res) => {
-  res.json({'result':'success'})
+  res.status(200).json({'result':'success'})
 })
 
 app.get('/items', async (req, res) => {
@@ -36,25 +38,25 @@ app.get('/items', async (req, res) => {
     {'id': 4, 'name': 'strawberry'},
     {'id': 5, 'name': 'watermelon'}
   ]
-  res.json(items)
+  res.status(200).json(items)
 })
 
 app.get('/items/:item_id', async (req, res) => {
   console.log(req.params)
-  res.json({'x':'y'})
+  res.status(200).json({'x':'y'})
 })
 
 app.post('/cart/items/:item_id', async (req, res) => {
   console.log(req.params.item_id)
-  res.json({'x':'y'})
+  res.status(200).json({'x':'y'})
 })
 
 app.post('/cart/purchase', async (req, res) => {
-  res.json({'result':'success'})
+  res.status(200).json({'result':'success'})
 })
 
 app.post('/cart/cancel', async (req, res) => {
-  res.json({'result':'success'})
+  res.status(200).json({'result':'success'})
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

@@ -18,7 +18,7 @@
 import uuid
 
 from datetime import datetime
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 
 
 class MetricsTaskSet(TaskSet):
@@ -50,7 +50,7 @@ class MetricsTaskSet(TaskSet):
             },
             name="logout")
 
-class MetricsLocust(HttpLocust):
-    task_set = MetricsTaskSet
+class MetricsLocust(HttpUser):
+    tasks = [MetricsTaskSet]
     min_wait=1
     max_wait=1

@@ -5,13 +5,14 @@ import io.gatling.core.Predef._
 
 import scala.concurrent.duration._
 import cupper.api.{Item, ShoppingCart, User}
+import cupper.config.Config
 
 import scala.util.Random
 
-class Demo extends Simulation {
+class Demo extends Simulation with Config {
   Random.setSeed(System.currentTimeMillis())
   val httpProtocol = http
-    .baseUrl("http://target:3000")
+    .baseUrl(TARGET)
     .headers(Map(
         HttpHeaderNames.ContentType -> HttpHeaderValues.ApplicationJson,
         HttpHeaderNames.UserAgent -> "gatling"
@@ -54,8 +55,8 @@ class Demo extends Simulation {
     }
     .exec(User.logout)
 
-  val profile = incrementUsersPerSec(1).times(5).eachLevelLasting(10 seconds).startingFrom(0)
-//  val profile = atOnceUsers(1)
-
-  setUp(user1.inject(profile).protocols(httpProtocol))
+  setUp(user1.inject(
+    atOnceUsers(1)
+    // incrementUsersPerSec(1).times(5).eachLevelLasting(10 seconds).startingFrom(0)
+  ).protocols(httpProtocol))
 }
