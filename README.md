@@ -3,39 +3,32 @@
 * Docker 19 or higher
 * Docker Compose 1.25 or higher
 
-## How to run
-### Environment Variable
-Set the following environment variable.
-* TARGET
+## Start docker containers
+docker-compose up -d
 
-See `.envrc`
+## Run Gatling
+1. login attacker
+docker-compose exec attacker bash
 
-### Start the docker container;
-`docker-compose up -d`
-
-### Attach the container
-`docker-compose exec stress-test /bin/bash`
-
-### Start sbt
-```
-cd /stress-test
+2. run sbt
+cd stress-test
 sbt
-```
 
-### Run a test
-* run all tests
+* All tests:
 ```
 gatling:test
 ```
 
-* run a specific test
+Single test:
 ```
-gatling:testOnly cupper.scenario.FirstTest
+gatling:testOnly cupper.scenario.Demo
 ```
-or
-```
-gatling:testOnly *FirstTest
-```
+
+3. Place of the reports
+stress-test/target/gatling
+
+## Run locust
+http://localhost:8089
 
 # See more details about gatling
 [Gatling](https://gatling.io/)
