@@ -1,5 +1,5 @@
-# Start with a base Python 3.7.2 image
-FROM python:3.7.2
+# Start with a base Python image
+FROM python:3.9.18
 
 # Add the external tasks directory into /tasks
 COPY requirements.txt /requirements.txt
